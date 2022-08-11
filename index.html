@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <link rel="stylesheet" href="age.css">
+</head>
+
+<header class="header">
+    Welcome To Age Calculator
+</header>
+
+<body>
+    <section class="s1">
+        <div class="parentdiv">
+            <h1> Enter Your Date Of Birth </h1>
+            <div class="border"></div>
+            <div class="div-text">
+                <input type="text" id="#day" onchange="daycheck()" class="i-class-text" placeholder="Day">
+                <span id="#dayerr" class="err"></span>
+                <input type="text" id="#month" onchange="monthcheck()" class="i-class-text" placeholder="Month">
+                <span id="#montherr" class="err"></span>
+                <input type="text" id="#year" onchange="Yearcheck()" class="i-class-text" placeholder="Year">
+                <span id="#yearerr" class="err"></span>
+                <input type="button" id="#submit" onclick="calculate_age()" class="i-class-button" value="Submit">
+            </div>
+            <h3 id="#demo" class="p1"></h3>
+        </div>
+    </section>
+
+    <script>
+        function getDate1() {
+            var date = new Date();
+            t = setTimeout('getDate1()', 1000);
+            return date;
+        }
+        function daycheck() {
+            let day = document.getElementById("#day");
+            let getday = day.value;
+
+            if (getday < 1 || getday > 31) {
+                document.getElementById("#dayerr").innerHTML = "Out Of Range 1 to 31";
+                return false;
+            }
+            else {
+                document.getElementById("#day").value = getday;
+                // document.getElementById("#demo").innerHTML = getday;
+                document.getElementById("#dayerr").innerHTML = "";
+                return true;
+            }
+
+
+        }
+
+        function monthcheck() {
+            let month = document.getElementById("#month");
+            let getmonth = month.value;
+
+            if (getmonth < 1 || getmonth > 12) {
+                document.getElementById("#montherr").innerHTML = "Out Of Range 1 to 12";
+                return false;
+            }
+            else {
+                document.getElementById("#month").value = getmonth;
+                //document.getElementById("#demo").innerHTML += getmonth;
+                document.getElementById("#montherr").innerHTML = "";
+                return true;
+            }
+        }
+
+        function Yearcheck() {
+            let year = document.getElementById("#year");
+            let getyear = year.value;
+
+            if (getyear < 1947 || getyear > getDate1().getFullYear()) {
+                document.getElementById("#yearerr").innerHTML = "Out Of Range 1947 to " + getDate1().getFullYear();
+                return false;
+            }
+            else {
+                document.getElementById("#year").value = getyear;
+                document.getElementById("#yearerr").innerHTML = "";
+                return true;
+            }
+        }
+
+        function calculate_age() {
+            var day = daycheck();
+            var month = monthcheck();
+            var Year = Yearcheck();
+
+            if (day && month && Year) {
+                let day = document.getElementById("#day");
+                let getday = day.value;
+                let month = document.getElementById("#month");
+                let getmonth = month.value;
+                let year = document.getElementById("#year");
+                let getyear = year.value;
+
+                if (getday > 1 && getDate1 < 9)
+                    getday = "0" + getday;
+                if (getmonth > 1 && getmonth < 9)
+                    getmonth = "0" + getmonth;
+
+                let d = "" + getyear + "-" + getmonth + "-" + getday;
+                let dat1 = new Date(d);
+
+                //document.getElementById("#demo").innerHTML = dat1;
+
+
+                var age = {};
+                var ageString = "";
+
+                //get years  
+                yearAge = getDate1().getFullYear() - dat1.getFullYear();
+
+                //get months  
+                if (getDate1().getMonth() >= dat1.getMonth())
+                    //get months when current month is greater  
+                    var monthAge = getDate1().getMonth() - dat1.getMonth();
+                else {
+                    yearAge--;
+                    var monthAge = 12 + getDate1().getMonth() - dat1.getMonth();
+                }
+
+                //get days  
+                if (getDate1().getDate() >= dat1.getDate())
+                    //get days when the current date is greater  
+                    var dateAge = getDate1().getDate() - dat1.getDate();
+                else {
+                    monthAge--;
+                    var dateAge = 31 + getDate1().getDate() - dat1.getDate();
+
+                    if (monthAge < 0) {
+                        monthAge = 11;
+                        yearAge--;
+                    }
+                }
+                //group the age in a single variable  
+                // age = {
+                //     years: yearAge,
+                //     months: monthAge,
+                //     days: dateAge
+                // }
+
+                ageString = "Your Age is "+yearAge+" Years " + monthAge+" Months " + dateAge +" Days ";
+
+                document.getElementById("#demo").innerHTML = ageString;
+
+                }
+            }
+
+
+
+
+    </script>
+
+</body>
+<footer class="footer">
+    @CopyRights Akshay Ponde
+</footer>
+</html>
